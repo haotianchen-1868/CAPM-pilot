@@ -1,0 +1,13 @@
+
+
+y <- read.csv() #rt-rf in CAPM
+X <- read.csv() #rm-rf in CAPM
+T <- length(y)
+tau <- seq(1:T)/T
+
+coef.lm <- stats::lm(y~0+X1+X2, data = X)$coef
+coef.tvlm <- tvOLS(x = as.matrix(X), y = y, bw = 0.1)$coefficients
+plot(tau, coef.tvlm[, 1], type="l", main="", ylab = expression(beta[1]), xlab = expression(tau),
+     ylim = range(beta[,1], coef.tvlm[, 1]))
+abline(h = coef.lm[1], col = 2)
+legend("topright", c( "tvlm", "lm"), col = c(1, 2), bty="n", lty = 1)
